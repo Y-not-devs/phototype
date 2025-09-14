@@ -3,9 +3,11 @@ Main Flask application for Phototype - PDF to JSON conversion with visualization
 """
 import os
 import json
+import sys
 import uuid
+import requests
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from services.pdf_excerpt_extractor import extract_pdf_excerpts
 
@@ -213,65 +215,63 @@ def create_app():
 
     @app.route("/upload", methods=['POST'])
     def upload_pdf():
-        """Handle PDF file upload and processing."""
-        # Check if file is present in request
+        """Handle PDF upload → forward to preprocessor → redirect to index."""
+        PREPROCESSOR_URL = "http://localhost:8001/preprocess/"
+
         if 'file' not in request.files:
-            return jsonify({'success': False, 'error': 'No file provided'}), 400
-        
+            flash("No file provided", "error")
+            return redirect(url_for("index"))
+
         file = request.files['file']
-        
-        # Check if file is selected
         if file.filename == '':
-            return jsonify({'success': False, 'error': 'No file selected'}), 400
-        
-        # Validate file type and size
+            flash("No file selected", "error")
+            return redirect(url_for("index"))
+
         if not allowed_file(file.filename):
-            return jsonify({'success': False, 'error': 'Only PDF files are allowed'}), 400
-        
-        # Check file size
+            flash("Only PDF files are allowed", "error")
+            return redirect(url_for("index"))
+
         file.seek(0, os.SEEK_END)
         file_length = file.tell()
         file.seek(0)
-        
         if file_length > MAX_FILE_SIZE:
-            return jsonify({'success': False, 'error': 'File too large. Maximum size is 16MB'}), 400
-        
+            flash("File too large (max 16MB)", "error")
+            return redirect(url_for("index"))
+
         try:
-            # Secure the filename
-            if not file.filename:
-                return jsonify({'success': False, 'error': 'Invalid filename'}), 400
-                
             filename = secure_filename(file.filename)
-            
-            # Save uploaded file
             upload_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(upload_path)
-            
-            # Generate output filename for JSON
-            json_filename = filename.rsplit('.', 1)[0] + '.json'
-            
-            # Process PDF to JSON (mock processing)
-            json_data = process_pdf_to_json(upload_path, filename)
-            
-            # Save JSON data
-            json_path = os.path.join(JSON_FOLDER, json_filename)
-            with open(json_path, 'w', encoding='utf-8') as f:
-                json.dump(json_data, f, indent=2, ensure_ascii=False)
-            
-            # Clean up uploaded PDF file
+
+            # Send to preprocessor
+            try:
+                with open(upload_path, "rb") as f:
+                    files = {"file": (filename, f, "application/pdf")}
+                    resp = requests.post(PREPROCESSOR_URL, files=files, timeout=120)
+
+                if resp.status_code == 200:
+                    flash("File sent to preprocessor successfully", "success")
+                else:
+                    flash(f"Preprocessor error: {resp.text}", "error")
+            except Exception as e:
+                flash(f"Preprocessor unavailable: {e}", "error")
+
+            # Clean up local file
             try:
                 os.remove(upload_path)
             except:
-                pass  # Don't fail if cleanup fails
-            
-            return jsonify({
+                pass
+
+        except Exception as e:
+            flash(f"Processing failed: {e}", "error")
+
+        return jsonify({
                 'success': True, 
                 'message': 'PDF processed successfully',
-                'filename': json_filename
+                'filename': filename
             })
-            
-        except Exception as e:
-            return jsonify({'success': False, 'error': f'Processing failed: {str(e)}'}), 500
+
+        return jsonify(response_payload), 200
 
     @app.route("/api/validation", methods=['POST'])
     def save_validation():
@@ -309,4 +309,9 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = 5000
+    if "--port" in sys.argv:
+        i = sys.argv.index("--port")
+        if i+1 < len(sys.argv):
+            port = int(sys.argv[i+1])
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=False)
