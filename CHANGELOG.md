@@ -23,3 +23,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Removed
 - Extra placeholder folders for minimal structure
+
+
+## [Unreleased]
+
+### Added
+- Preprocessor microservice (FastAPI) for handling PDF-to-image pipeline
+- Controller (`run.py`) to launch and manage multiple services with structured logging
+- Automatic log forwarding from subprocesses
+
+### Changed
+- Flask upload handler now delegates preprocessing to FastAPI service
+- Removed redundant local upload storage after forwarding
