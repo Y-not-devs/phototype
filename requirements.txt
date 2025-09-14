@@ -1,0 +1,26 @@
+# Core libraries
+flask          # frontend service
+fastapi        # backend services (router, OCR, preprocessing, etc.)
+uvicorn        # run FastAPI apps
+requests       # HTTP calls between services
+pydantic       # request/response validation in services
+
+# OCR and NLP libraries
+opencv-python  # image preprocessing
+numpy          # array ops (needed by OpenCV, ML models)
+scikit-learn   # optional, for lang-detect / ML classifiers
+langdetect     # quick language detection baseline
+torch          # deep learning OCR models
+transformers   # pretrained OCR/Lang models (HuggingFace)
+pillow         # image manipulation
+
+# Data handling
+pandas         # tabular data / excel if needed
+openpyxl       # .xlsx handling
+python-docx    # .docx if still needed
+pypdf2         # PDF parsing
+
+# Utilities
+python-multipart   # file uploads in FastAPI
+aiohttp            # async requests (optional, can stick to requests)
+pytest             # testing

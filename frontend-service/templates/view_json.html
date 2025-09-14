@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ filename }} - Phototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        accent: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .json-container {
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        .json-key {
+            color: #10b981;
+            font-weight: 600;
+        }
+        .json-string {
+            color: #fbbf24;
+        }
+        .json-number {
+            color: #3b82f6;
+            font-weight: 500;
+        }
+        .json-boolean {
+            color: #ec4899;
+            font-weight: 500;
+        }
+        .json-null {
+            color: #6b7280;
+            font-style: italic;
+        }
+        .json-brace {
+            color: #d1d5db;
+            font-weight: 700;
+        }
+        .json-colon {
+            color: #9ca3af;
+            margin: 0 4px;
+        }
+        .json-comma {
+            color: #9ca3af;
+        }
+        .json-field {
+            margin: 8px 0;
+            padding: 6px 12px;
+            border-left: 3px solid #374151;
+            background: linear-gradient(90deg, rgba(55, 65, 81, 0.3) 0%, transparent 100%);
+            border-radius: 0 6px 6px 0;
+        }
+        .json-nested {
+            margin-left: 24px;
+            border-left: 2px solid #374151;
+            padding-left: 16px;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen font-sans text-gray-100">
+    <div class="container mx-auto max-w-6xl px-4 py-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center">
+                <a href="{{ url_for('main.index') }}" 
+                   class="bg-gray-700 hover:bg-gray-600 text-gray-100 p-3 rounded-lg mr-4 transition-colors duration-200 shadow-lg border border-gray-600">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-100 mb-1">{{ filename }}</h1>
+                    <p class="text-gray-400 flex items-center">
+                        <span class="material-symbols-outlined mr-2 text-accent">data_object</span>
+                        Contract Data Visualization - Phototype
+                    </p>
+                </div>
+            </div>
+            <div class="flex space-x-3">
+                <a href="{{ url_for('main.api_get_json', filename=filename) }}" 
+                   class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-lg transition-colors duration-200 flex items-center shadow-lg">
+                    <span class="material-symbols-outlined mr-2">download</span>
+                    Download JSON
+                </a>
+            </div>
+        </div>
+
+        <!-- JSON Content -->
+        <div class="bg-gray-800 rounded-xl shadow-2xl border border-gray-600 overflow-hidden">
+            <!-- Metadata Header -->
+            <div class="bg-gray-700 px-6 py-4 border-b border-gray-600">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-100 flex items-center">
+                        <span class="material-symbols-outlined mr-2 text-primary">description</span>
+                        Contract Information
+                    </h2>
+                    <div class="text-sm text-gray-400">
+                        {% if data is mapping %}{{ data|length }} main fields{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON Visualization -->
+            <div class="p-6 json-container">
+                <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+                    {% if data %}
+                        {% for key, value in data.items() %}
+                            <div class="json-field">
+                                <span class="json-key">"{{ key }}"</span><span class="json-colon">:</span>
+                                {% if value is mapping %}
+                                    <span class="json-brace">{</span>
+                                    <div class="json-nested">
+                                        {% for sub_key, sub_value in value.items() %}
+                                            <div class="json-field">
+                                                <span class="json-key">"{{ sub_key }}"</span><span class="json-colon">:</span>
+                                                {% if sub_value is string %}
+                                                    <span class="json-string">"{{ sub_value|e }}"</span>
+                                                {% elif sub_value is number %}
+                                                    <span class="json-number">{{ sub_value }}</span>
+                                                {% elif sub_value is sameas true or sub_value is sameas false %}
+                                                    <span class="json-boolean">{{ sub_value|lower }}</span>
+                                                {% elif sub_value is none %}
+                                                    <span class="json-null">null</span>
+                                                {% elif sub_value is mapping %}
+                                                    <span class="json-brace">{</span>
+                                                    <div class="json-nested">
+                                                        {% for deep_key, deep_value in sub_value.items() %}
+                                                            <div class="json-field">
+                                                                <span class="json-key">"{{ deep_key }}"</span><span class="json-colon">:</span>
+                                                                {% if deep_value is string %}
+                                                                    <span class="json-string">"{{ deep_value|e }}"</span>
+                                                                {% elif deep_value is number %}
+                                                                    <span class="json-number">{{ deep_value }}</span>
+                                                                {% elif deep_value is sameas true or deep_value is sameas false %}
+                                                                    <span class="json-boolean">{{ deep_value|lower }}</span>
+                                                                {% elif deep_value is none %}
+                                                                    <span class="json-null">null</span>
+                                                                {% else %}
+                                                                    <span class="json-string">"{{ deep_value|e }}"</span>
+                                                                {% endif %}
+                                                                {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <span class="json-brace">}</span>
+                                                {% else %}
+                                                    <span class="json-string">"{{ sub_value|e }}"</span>
+                                                {% endif %}
+                                                {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="json-brace">}</span>
+                                {% elif value is iterable and value is not string %}
+                                    <span class="json-brace">[</span>
+                                    <div class="json-nested">
+                                        {% for item in value %}
+                                            <div class="json-field">
+                                                {% if item is string %}
+                                                    <span class="json-string">"{{ item|e }}"</span>
+                                                {% elif item is number %}
+                                                    <span class="json-number">{{ item }}</span>
+                                                {% elif item is sameas true or item is sameas false %}
+                                                    <span class="json-boolean">{{ item|lower }}</span>
+                                                {% elif item is none %}
+                                                    <span class="json-null">null</span>
+                                                {% else %}
+                                                    <span class="json-string">"{{ item|e }}"</span>
+                                                {% endif %}
+                                                {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="json-brace">]</span>
+                                {% elif value is string %}
+                                    <span class="json-string">"{{ value|e }}"</span>
+                                {% elif value is number %}
+                                    <span class="json-number">{{ value }}</span>
+                                {% elif value is sameas true or value is sameas false %}
+                                    <span class="json-boolean">{{ value|lower }}</span>
+                                {% elif value is none %}
+                                    <span class="json-null">null</span>
+                                {% else %}
+                                    <span class="json-string">"{{ value|e }}"</span>
+                                {% endif %}
+                                {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-8 text-gray-400">
+                            <span class="material-symbols-outlined text-4xl mb-4 block">error</span>
+                            No data available
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

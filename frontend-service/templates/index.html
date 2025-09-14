@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phototype - JSON Data Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        accent: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-800 min-h-screen font-sans text-gray-100">
+    <div class="container mx-auto max-w-6xl px-4 py-8">
+        <!-- Header -->
+        <div id="heroSection" class="text-center mb-12">
+            <div class="flex items-center justify-center mb-6">
+                <div class="bg-gradient-to-r from-primary to-accent p-4 rounded-full mr-4">
+                    <span class="material-symbols-outlined text-white text-3xl">analytics</span>
+                </div>
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    Phototype
+                </h1>
+            </div>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                Transform PDF contracts into structured JSON data with elegant visualization.
+            </p>
+        </div>
+
+        <!-- PDF Upload Section -->
+        <div class="bg-gray-700 rounded-xl shadow-lg p-6 border border-gray-600 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center">
+                    <div class="bg-primary/20 p-3 rounded-lg mr-4">
+                        <span class="material-symbols-outlined text-primary">upload_file</span>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-100">Upload PDF Contract</h2>
+                        <p class="text-gray-400">Convert PDF contracts to structured JSON data</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="uploadForm" enctype="multipart/form-data" class="space-y-4">
+                <div class="border-2 border-dashed border-gray-500 rounded-lg p-8 text-center transition-colors duration-200 hover:border-primary" id="dropZone">
+                    <div class="space-y-4">
+                        <div class="flex justify-center">
+                            <div class="bg-gray-600 p-4 rounded-full">
+                                <span class="material-symbols-outlined text-gray-300 text-3xl">cloud_upload</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-lg font-medium text-gray-100 mb-2">Drop your PDF file here or click to browse</p>
+                            <p class="text-gray-400 text-sm">Supports PDF files up to 10MB</p>
+                        </div>
+                        <input type="file" id="fileInput" name="file" accept=".pdf" class="hidden">
+                        <button type="button" onclick="document.getElementById('fileInput').click()" 
+                                class="bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center mx-auto">
+                            <span class="material-symbols-outlined mr-2">attach_file</span>
+                            Select PDF File
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="fileInfo" class="hidden bg-gray-600 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="material-symbols-outlined text-accent mr-2">description</span>
+                            <span id="fileName" class="text-gray-100 font-medium"></span>
+                            <span id="fileSize" class="text-gray-400 text-sm ml-2"></span>
+                        </div>
+                        <button type="button" onclick="clearFile()" class="text-gray-400 hover:text-red-400 transition-colors">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button type="button" onclick="clearFile()" class="bg-gray-600 hover:bg-gray-500 text-gray-100 px-4 py-2 rounded-lg transition-colors duration-200">
+                        Cancel
+                    </button>
+                    <button type="submit" id="uploadBtn" disabled 
+                            class="bg-accent hover:bg-emerald-600 disabled:bg-gray-500 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center">
+                        <span class="material-symbols-outlined mr-2">rocket_launch</span>
+                        <span id="uploadBtnText">Process PDF</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- JSON Files Grid -->
+        <div id="jsonFilesList" class="mb-8">
+            <!-- Files will be loaded dynamically -->
+        </div>
+
+        <!-- Features Section -->
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-700 rounded-xl p-6 shadow-lg border border-gray-600 feature-card transition-transform duration-200">
+                <div class="bg-accent/20 p-3 rounded-lg mb-4 inline-block">
+                    <span class="material-symbols-outlined text-accent">search</span>
+                </div>
+                <h3 class="font-semibold text-gray-100 mb-2">Smart Parsing</h3>
+                <p class="text-gray-400 text-sm">Automatically detects and displays contract fields with intelligent formatting.</p>
+            </div>
+            
+            <div class="bg-gray-700 rounded-xl p-6 shadow-lg border border-gray-600 feature-card transition-transform duration-200">
+                <div class="bg-primary/20 p-3 rounded-lg mb-4 inline-block">
+                    <span class="material-symbols-outlined text-primary">palette</span>
+                </div>
+                <h3 class="font-semibold text-gray-100 mb-2">Beautiful UI</h3>
+                <p class="text-gray-400 text-sm">Clean, modern dark interface designed for easy data exploration and analysis.</p>
+            </div>
+            
+            <div class="bg-gray-700 rounded-xl p-6 shadow-lg border border-gray-600 feature-card transition-transform duration-200">
+                <div class="bg-accent/20 p-3 rounded-lg mb-4 inline-block">
+                    <span class="material-symbols-outlined text-accent">api</span>
+                </div>
+                <h3 class="font-semibold text-gray-100 mb-2">API Access</h3>
+                <p class="text-gray-400 text-sm">RESTful API endpoints for programmatic access to your JSON data.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-8 border-t border-gray-700 bg-gray-900/50">
+        <div class="container mx-auto max-w-6xl px-4 text-center">
+            <p class="text-gray-500">
+                <span class="material-symbols-outlined text-sm mr-1">code</span>
+                Built with Flask, Tailwind CSS, and modern web technologies - Powered by Phototype
+            </p>
+        </div>
+    </footer>
+
+    <!-- Load JavaScript modules -->
+    <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
