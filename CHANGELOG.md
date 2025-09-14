@@ -35,3 +35,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - Flask upload handler now delegates preprocessing to FastAPI service
 - Removed redundant local upload storage after forwarding
+
+## [Unreleased]
+
+### Added
+- Preprocessor now segments PDF pages into paragraphs and titles instead of individual words.
+- `/preprocess/` endpoint returns paragraph images and metadata (bounding box and type).
+
+### Changed
+- Improved paragraph detection using combined horizontal and vertical dilation.

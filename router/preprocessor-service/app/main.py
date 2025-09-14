@@ -1,4 +1,4 @@
-import os, sys, math, shutil, subprocess
+import os, sys, math, shutil, subprocess, json
 import numpy as np
 from fastapi import FastAPI, UploadFile, File
 from pdf2image import convert_from_bytes
@@ -140,6 +140,47 @@ def check_pdfinfo(poppler_path=None):
         return proc.returncode == 0, proc.stdout.strip() or proc.stderr.strip()
     except Exception as e:
         return False, str(e)
+    
+def segment_page_paragraphs(pil_img, base_name: str, page_num: int):
+    img = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2GRAY)
+    _, thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+    # Step 1: Dilate horizontally to connect words in a line
+    kernel_h = cv2.getStructuringElement(cv2.MORPH_RECT, (50, 1))
+    dilated_h = cv2.dilate(thresh, kernel_h, iterations=1)
+
+    # Step 2: Dilate vertically to connect lines into paragraphs
+    kernel_v = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 30))
+    dilated = cv2.dilate(dilated_h, kernel_v, iterations=1)
+
+    contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    blocks, out_files = [], []
+
+    heights = [cv2.boundingRect(c)[3] for c in contours if cv2.boundingRect(c)[3] > 20]
+    median_h = np.median(heights) if heights else 30
+
+    for i, c in enumerate(sorted(contours, key=lambda c: cv2.boundingRect(c)[1])):
+        x, y, w, h = cv2.boundingRect(c)
+        if w < 50 or h < 30:
+            continue
+
+        crop = pil_img.crop((x, y, x + w, y + h))
+        out_path = OUTPUT_DIR / f"{base_name}_page{page_num}_block{i}.png"
+        crop.save(out_path, format="PNG")
+
+        block_type = "title" if h > 2 * median_h else "paragraph"
+
+        blocks.append({
+            "id": i,
+            "type": block_type,
+            "bbox": [int(x), int(y), int(w), int(h)],
+            "image": str(out_path)
+        })
+        out_files.append(str(out_path))
+
+    return blocks, out_files
+
+
 
 # ───────────────────────────
 # FastAPI Endpoint
@@ -150,14 +191,23 @@ async def preprocess(file: UploadFile = File(...)):
     pdf_bytes = await file.read()
     images = convert_from_bytes(pdf_bytes)
 
-    saved_files = []
-    for i, img in enumerate(images, start=1):
-        out_path = OUTPUT_DIR / f"{file.filename}_page{i}.png"
-        img.save(out_path, format="PNG")
-        saved_files.append(str(out_path))
+    all_blocks, all_files = [], []
+    base_name = Path(file.filename).stem
 
-    return {
+    for i, img in enumerate(images, start=1):
+        blocks, out_files = segment_page_paragraphs(img, base_name, i)
+        all_blocks.append({"page": i, "blocks": blocks})
+        all_files.extend(out_files)
+
+    metadata = {
         "filename": file.filename,
         "pages": len(images),
-        "saved_files": saved_files
+        "segments": all_blocks,
+        "saved_files": all_files
     }
+
+    meta_path = OUTPUT_DIR / f"{base_name}_metadata.json"
+    with open(meta_path, "w") as f:
+        json.dump(metadata, f, indent=2)
+
+    return metadata
