@@ -31,7 +31,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">
-                <a href="{{ url_for('main.index') }}" 
+                <a href="{{ url_for('index') }}" 
                    class="bg-gray-700 hover:bg-gray-600 text-gray-100 p-3 rounded-lg mr-4 transition-colors duration-200 shadow-lg border border-gray-600">
                     <span class="material-symbols-outlined">arrow_back</span>
                 </a>
@@ -49,7 +49,7 @@
                     <span class="material-symbols-outlined mr-2">view_quilt</span>
                     <span id="viewModeText">Split View</span>
                 </button>
-                <a href="{{ url_for('main.api_get_json', filename=filename) }}" 
+                <a href="{{ url_for('api_get_json', filename=filename) }}" 
                    class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-lg transition-colors duration-200 flex items-center shadow-lg">
                     <span class="material-symbols-outlined mr-2">download</span>
                     Download JSON
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="p-6 json-container overflow-y-auto" style="max-height: 500px;">
+                <div class="p-6 json-container overflow-y-auto" style="max-height: 70vh;">
                     <div class="bg-gray-900 rounded-lg p-6">
                         {% if data %}
                             {% for key, value in data.items() %}
@@ -332,7 +332,7 @@
                     </div>
                 </div>
 
-                <div class="h-full overflow-y-auto" style="max-height: 500px;">
+                <div class="h-full overflow-y-auto" style="max-height: 70vh;">
                     <div class="excerpt-viewer" id="excerptViewer">
                         <div class="flex items-center justify-center h-full text-gray-400 min-h-48">
                             <div class="text-center">
