@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loading-panel.css') }}">
     <script>
         tailwind.config = {
             theme: {
@@ -146,5 +147,109 @@
 
     <!-- Load JavaScript modules -->
     <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    
+    <!-- Fallback JSON loader -->
+    <script>
+        // Fallback JSON file loader
+        async function loadJsonFilesFallback() {
+            const container = document.getElementById('jsonFilesList');
+            if (!container) return;
+            
+            try {
+                const response = await fetch('/api/list-json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.files && data.files.length > 0) {
+                    const filesHTML = data.files.map(filename => {
+                        const nameWithoutExt = filename.replace('.json', '');
+                        return `
+                            <div class="bg-gray-700 rounded-xl shadow-lg border border-gray-600 hover:border-primary transition-all duration-200 cursor-pointer group" onclick="window.location.href='/view/${encodeURIComponent(filename)}'">
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="bg-primary/20 p-3 rounded-lg group-hover:bg-primary/30 transition-colors duration-200">
+                                            <span class="material-symbols-outlined text-primary">description</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">JSON</span>
+                                    </div>
+                                    <h3 class="font-semibold text-gray-100 mb-2 group-hover:text-primary transition-colors duration-200">${nameWithoutExt}</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Contract data extracted from PDF</p>
+                                    <div class="flex items-center justify-between text-xs text-gray-500">
+                                        <span>Click to view</span>
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    container.innerHTML = `
+                        <div class="bg-gray-700 rounded-xl shadow-lg p-6 border border-gray-600">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center">
+                                    <div class="bg-accent/20 p-3 rounded-lg mr-4">
+                                        <span class="material-symbols-outlined text-accent">folder_open</span>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xl font-semibold text-gray-100">Available JSON Files</h2>
+                                        <p class="text-gray-400">Previously processed contract data</p>
+                                    </div>
+                                </div>
+                                <button onclick="window.location.reload()" class="text-gray-400 hover:text-gray-200 transition-colors">
+                                    <span class="material-symbols-outlined">refresh</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${filesHTML}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="bg-gray-700 rounded-xl shadow-lg p-6 border border-gray-600 text-center">
+                            <div class="text-gray-500 mb-4">
+                                <span class="material-symbols-outlined text-6xl">folder_open</span>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-300 mb-2">No JSON Files Found</h3>
+                            <p class="text-gray-500 mb-4">Upload and process PDF contracts to see them here</p>
+                            <button onclick="document.getElementById('fileInput')?.click()" 
+                                    class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                Upload First Contract
+                            </button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load JSON files:', error);
+                container.innerHTML = `
+                    <div class="bg-red-900/20 border border-red-500 rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-red-400 mb-4">
+                            <span class="material-symbols-outlined text-6xl">error</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-red-300 mb-2">Failed to Load Files</h3>
+                        <p class="text-red-400 mb-4">Error: ${error.message}</p>
+                        <button onclick="loadJsonFilesFallback()" 
+                                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                            Retry
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Load JSON files when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Give a short delay to allow the main app to load, then fallback if needed
+            setTimeout(() => {
+                const container = document.getElementById('jsonFilesList');
+                if (container && container.innerHTML.includes('will be loaded dynamically')) {
+                    loadJsonFilesFallback();
+                }
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

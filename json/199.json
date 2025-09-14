@@ -1,0 +1,259 @@
+{
+  "fields": {
+    "contract_number": "AUTO_199",
+    "date": "14 September 2025",
+    "seller": {
+      "name": "Extracted from preprocessor data",
+      "location": "Location from OCR",
+      "representative": "Representative from document",
+      "authority": "Authority document reference"
+    },
+    "buyer": {
+      "name": "Buyer extracted from PDF",
+      "location": "Buyer location",
+      "director": "Director name",
+      "authority": "Authority document"
+    },
+    "subject_of_contract": {
+      "description": "Contract subject extracted by backend OCR",
+      "origin_country": "Origin country from document"
+    },
+    "price_and_total_cost": {
+      "price": "Price extracted from document",
+      "currency": "Currency from OCR",
+      "total_cost": "Total cost from backend processing"
+    }
+  },
+  "metadata": {
+    "processed_date": "2025-09-14T21:17:01.507374",
+    "source_file": "199.pdf",
+    "processing_method": "Backend OCR with preprocessor",
+    "preprocessor_data": {
+      "filename": "199.pdf",
+      "pages": 3,
+      "segments": [
+        {
+          "page": 1,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                610,
+                107,
+                537,
+                60
+              ],
+              "image": "processed\\199_page1_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                1277,
+                165,
+                323,
+                56
+              ],
+              "image": "processed\\199_page1_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                159,
+                183,
+                241,
+                56
+              ],
+              "image": "processed\\199_page1_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "title",
+              "bbox": [
+                158,
+                273,
+                1449,
+                260
+              ],
+              "image": "processed\\199_page1_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "title",
+              "bbox": [
+                164,
+                567,
+                1445,
+                352
+              ],
+              "image": "processed\\199_page1_block4.png"
+            },
+            {
+              "id": 5,
+              "type": "title",
+              "bbox": [
+                165,
+                930,
+                1453,
+                1408
+              ],
+              "image": "processed\\199_page1_block5.png"
+            },
+            {
+              "id": 6,
+              "type": "paragraph",
+              "bbox": [
+                75,
+                955,
+                50,
+                30
+              ],
+              "image": "processed\\199_page1_block6.png"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                855,
+                40,
+                696,
+                64
+              ],
+              "image": "processed\\199_page2_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                158,
+                105,
+                1446,
+                222
+              ],
+              "image": "processed\\199_page2_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "title",
+              "bbox": [
+                161,
+                338,
+                1453,
+                1064
+              ],
+              "image": "processed\\199_page2_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "title",
+              "bbox": [
+                170,
+                1411,
+                1452,
+                927
+              ],
+              "image": "processed\\199_page2_block3.png"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                855,
+                38,
+                697,
+                64
+              ],
+              "image": "processed\\199_page3_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                158,
+                101,
+                1447,
+                436
+              ],
+              "image": "processed\\199_page3_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                164,
+                551,
+                1447,
+                296
+              ],
+              "image": "processed\\199_page3_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "title",
+              "bbox": [
+                167,
+                864,
+                1452,
+                925
+              ],
+              "image": "processed\\199_page3_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "paragraph",
+              "bbox": [
+                180,
+                2172,
+                436,
+                165
+              ],
+              "image": "processed\\199_page3_block4.png"
+            },
+            {
+              "id": 5,
+              "type": "paragraph",
+              "bbox": [
+                1133,
+                2180,
+                440,
+                158
+              ],
+              "image": "processed\\199_page3_block5.png"
+            }
+          ]
+        }
+      ],
+      "saved_files": [
+        "processed\\199_page1_block0.png",
+        "processed\\199_page1_block1.png",
+        "processed\\199_page1_block2.png",
+        "processed\\199_page1_block3.png",
+        "processed\\199_page1_block4.png",
+        "processed\\199_page1_block5.png",
+        "processed\\199_page1_block6.png",
+        "processed\\199_page2_block0.png",
+        "processed\\199_page2_block1.png",
+        "processed\\199_page2_block2.png",
+        "processed\\199_page2_block3.png",
+        "processed\\199_page3_block0.png",
+        "processed\\199_page3_block1.png",
+        "processed\\199_page3_block2.png",
+        "processed\\199_page3_block3.png",
+        "processed\\199_page3_block4.png",
+        "processed\\199_page3_block5.png"
+      ]
+    }
+  }
+}

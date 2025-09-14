@@ -1,50 +1,521 @@
 {
-	"fields": {
-		"contract_number": "24022311",
-		"date": "2 апреля 2024",
-		"seller": {
-			"name": "ОАО «БМЗ управляющая компания холдинга «БМК»",
-			"location": "г. Жлобин, Республика Беларусь",
-			"representative": "Чаус В.А., заместитель генерального директора по ВЭС, сбыту и управлению ТПС",
-			"authority": "доверенность №8/355 от 12.12.2023"
-		},
-		"buyer": {
-			"name": "ТОО «АзияМетизКомплект» (ТОО «Азия Метиз Комплект»)",
-			"location": "г. Астана, Республика Казахстан",
-			"director": "Кирдяев Иван Викторович",
-			"authority": "Устав"
-		},
-		"subject_of_contract": {
-			"description": "Продажа товара согласно приложениям к Договору для вывоза в Республику Узбекистан",
-			"origin_country": "Республика Беларусь"
-		},
-		"price_and_total_cost": {
-			"price": "определяется конъюнктурой рынка и условиями поставки",
-			"currency": "российские рубли",
-			"total_cost": "100 000 000,00 рос. руб"
-		},
-		"quality_packaging_marking": {
-			"quality": "должно соответствовать стандартам или техническим условиям",
-			"packaging": "согласно приложениям",
-			"certification": "сертификатом, выданным Продавцом"
-		},
-		"delivery_documents": {
-			"deadline": "в течение 24 часов после отгрузки",
-			"required_documents": [
-				"счет-фактура",
-				"сертификат качества",
-				"сертификат происхождения",
-				"международная накладная формы CMR",
-				"железнодорожная накладная",
-				"товарная накладная",
-				"копия декларации на товар"
-			]
-		},
-		"acceptance_of_goods": {
-			"quality_acceptance": "по сертификату качества",
-			"quantity_acceptance": "по весу и/или количеству единиц в отгрузочных документах",
-			"regulations": "Положение о приемке товаров по количеству и качеству"
-		}
-	},
-	"text": "ДОГОВОР № 24022311 от « 2 » _04_2024\nОАО « БМЗ управляющая компания холдинга « БМК » , г. Жлобин , Республика\nБеларусь , именуемое в дальнейшем Продавец , в лице заместителя генерального директора по\nВЭС , сбыту и управлению ТПС Чауса В.А. , действующего на основании доверенности №8 / 355\nот 12.12.2023 с одной стороны , и\nТоварищество с ограниченной ответственностью « АзияМетизКомплект » ( ТОО\n« Азия Метиз Комплект » ) , г. Астана , Республика Казахстан , именуемое в дальнейшем\nПокупатель , в лице директора компании Кирдяева Ивана Викторовича , действующего на\nосновании Устава , с другой стороны , договорились о нижеследующем :\nI. ПРЕДМЕТ ДОГОВОРА\n1.1 . Продавец обязуется продать в собственность Покупателя , а Покупатель обязуется\nоплатить товар согласно приложениям к настоящему Договору . Оговоренный в приложениях\nтовар приобретается для вывоза в Республику Узбекистан .\nСтрана происхождения оговоренного в приложениях товара - Республика Беларусь .\nII . ЦЕНА ТОВАРА , ОБЩАЯ СТОИМОСТЬ ДОГОВОРА\n2.1 . Цена товара определяется сложившейся конъюнктурой рынка , условиями поставки и\nсодержится в приложениях к данному Договору . В случае увеличения цен на сырье и\nматериалы , энергоносители и иные ценообразующие факторы , цена на товар может быть\nизменена Продавцом по согласованию с Покупателем .\n2.2 . Валюта договора - российские рубли\n2.3 . Стоимость товара и объем поставки товара определяются в соответствии C\nприложениями , являющимися неотъемлемой частью договора .\n2.4 . Ориентировочная стоимость договора составляет 100 000 000 , 00 рос . руб\nш КАЧЕСТВО , УПАКОВКА И МАРКИРОВКА\n3.1 . Качество , упаковка и маркировка товара , проданного по Договору , должны\nсоответствовать стандартам или техническим условиям , указанным в приложениях .\n3.2 . Качество товара подтверждается сертификатом , выданным Продавцом .\n3.3 . В течение 24 часов после отгрузки Продавец обязан предоставить посредством\nэлектронной почты Покупателю на электронный адрес amk-astana@mail.ru авизо об отгрузке :\nсчет ( счет - фактура , счет - проформа ) , сертификат ( паспорт ) качества , сертификат\nпроисхождения , международную накладную формы CMR , железнодорожную накладную ,\nтоварную накладную , копию декларации на товар ( внешнее представление электронной\nдекларации на товары либо копию декларации на товары , в случае оформления такой\nдекларации в письменной форме ) .\nIV . ПРИЕМКА ТОВАРА\n4.1 . Товары , проданные по Договору , поставляются Продавцом и принимаются\nПокупателем :\nа ) по качеству - в соответствии с сертификатом качества , выданным Продавцом .\nВ случае обнаружения несоответствия товара техническим условиям , оговоренным в\nПриложениях , прилагаемым к Договору , Покупатель должен незамедлительно известить\nПродавца в письменной форме .\nб ) по количеству - в соответствии с весом и / или количеством единиц , указанным в отгрузочных\nдокументах .\n« Приемка товара осуществляется в соответствии с требованиями Положения о приемке\nтоваров по количеству и качеству , утвержденного постановлением Совета Министров\nРеспублики Беларусь от 3 сентября 2008г . № 1290. Акт о скрытых недостатках товара ,\nсоставленный согласно Положению о приемке товаров по количеству и качеству ,\nутвержденному постановлением Совета Министров Республики Беларусь от 3 сентября 2008г .\n24022311 ТОО « Азия МетизКомплект »"
+  "fields": {
+    "contract_number": "AUTO_8A16",
+    "date": "14 September 2025",
+    "seller": {
+      "name": "Extracted from preprocessor data",
+      "location": "Location from OCR",
+      "representative": "Representative from document",
+      "authority": "Authority document reference"
+    },
+    "buyer": {
+      "name": "Buyer extracted from PDF",
+      "location": "Buyer location",
+      "director": "Director name",
+      "authority": "Authority document"
+    },
+    "subject_of_contract": {
+      "description": "Contract subject extracted by backend OCR",
+      "origin_country": "Origin country from document"
+    },
+    "price_and_total_cost": {
+      "price": "Price extracted from document",
+      "currency": "Currency from OCR",
+      "total_cost": "Total cost from backend processing"
+    }
+  },
+  "metadata": {
+    "processed_date": "2025-09-14T21:18:01.546658",
+    "source_file": "8A16.pdf",
+    "processing_method": "Backend OCR with preprocessor",
+    "preprocessor_data": {
+      "filename": "8A16.pdf",
+      "pages": 5,
+      "segments": [
+        {
+          "page": 1,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                1186,
+                41,
+                185,
+                32
+              ],
+              "image": "processed\\8A16_page1_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "title",
+              "bbox": [
+                1544,
+                47,
+                64,
+                68
+              ],
+              "image": "processed\\8A16_page1_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                1481,
+                53,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "title",
+              "bbox": [
+                102,
+                170,
+                1359,
+                418
+              ],
+              "image": "processed\\8A16_page1_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "paragraph",
+              "bbox": [
+                1542,
+                532,
+                50,
+                31
+              ],
+              "image": "processed\\8A16_page1_block4.png"
+            },
+            {
+              "id": 5,
+              "type": "title",
+              "bbox": [
+                109,
+                591,
+                1350,
+                222
+              ],
+              "image": "processed\\8A16_page1_block5.png"
+            },
+            {
+              "id": 6,
+              "type": "paragraph",
+              "bbox": [
+                1538,
+                598,
+                52,
+                32
+              ],
+              "image": "processed\\8A16_page1_block6.png"
+            },
+            {
+              "id": 7,
+              "type": "paragraph",
+              "bbox": [
+                1451,
+                758,
+                52,
+                32
+              ],
+              "image": "processed\\8A16_page1_block7.png"
+            },
+            {
+              "id": 8,
+              "type": "title",
+              "bbox": [
+                113,
+                809,
+                1353,
+                408
+              ],
+              "image": "processed\\8A16_page1_block8.png"
+            },
+            {
+              "id": 9,
+              "type": "paragraph",
+              "bbox": [
+                32,
+                1003,
+                50,
+                31
+              ],
+              "image": "processed\\8A16_page1_block9.png"
+            },
+            {
+              "id": 10,
+              "type": "title",
+              "bbox": [
+                70,
+                1179,
+                1450,
+                996
+              ],
+              "image": "processed\\8A16_page1_block10.png"
+            },
+            {
+              "id": 11,
+              "type": "paragraph",
+              "bbox": [
+                95,
+                1222,
+                51,
+                33
+              ],
+              "image": "processed\\8A16_page1_block11.png"
+            },
+            {
+              "id": 12,
+              "type": "paragraph",
+              "bbox": [
+                52,
+                1279,
+                53,
+                33
+              ],
+              "image": "processed\\8A16_page1_block12.png"
+            },
+            {
+              "id": 13,
+              "type": "paragraph",
+              "bbox": [
+                1290,
+                1694,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block13.png"
+            },
+            {
+              "id": 14,
+              "type": "paragraph",
+              "bbox": [
+                1573,
+                1800,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block14.png"
+            },
+            {
+              "id": 15,
+              "type": "paragraph",
+              "bbox": [
+                80,
+                2097,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block15.png"
+            },
+            {
+              "id": 16,
+              "type": "paragraph",
+              "bbox": [
+                1412,
+                2152,
+                57,
+                48
+              ],
+              "image": "processed\\8A16_page1_block16.png"
+            },
+            {
+              "id": 17,
+              "type": "title",
+              "bbox": [
+                92,
+                2170,
+                525,
+                66
+              ],
+              "image": "processed\\8A16_page1_block17.png"
+            },
+            {
+              "id": 18,
+              "type": "paragraph",
+              "bbox": [
+                1558,
+                2184,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block18.png"
+            },
+            {
+              "id": 19,
+              "type": "paragraph",
+              "bbox": [
+                31,
+                2190,
+                55,
+                33
+              ],
+              "image": "processed\\8A16_page1_block19.png"
+            },
+            {
+              "id": 20,
+              "type": "paragraph",
+              "bbox": [
+                794,
+                2192,
+                51,
+                30
+              ],
+              "image": "processed\\8A16_page1_block20.png"
+            },
+            {
+              "id": 21,
+              "type": "paragraph",
+              "bbox": [
+                1334,
+                2201,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block21.png"
+            },
+            {
+              "id": 22,
+              "type": "paragraph",
+              "bbox": [
+                1220,
+                2261,
+                51,
+                30
+              ],
+              "image": "processed\\8A16_page1_block22.png"
+            },
+            {
+              "id": 23,
+              "type": "paragraph",
+              "bbox": [
+                719,
+                2269,
+                50,
+                30
+              ],
+              "image": "processed\\8A16_page1_block23.png"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                128,
+                1419,
+                2089
+              ],
+              "image": "processed\\8A16_page2_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                1484,
+                2168,
+                60,
+                49
+              ],
+              "image": "processed\\8A16_page2_block1.png"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                134,
+                128,
+                1426,
+                1018
+              ],
+              "image": "processed\\8A16_page3_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                1163,
+                1427,
+                979
+              ],
+              "image": "processed\\8A16_page3_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                1484,
+                2168,
+                60,
+                49
+              ],
+              "image": "processed\\8A16_page3_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "paragraph",
+              "bbox": [
+                134,
+                2168,
+                507,
+                49
+              ],
+              "image": "processed\\8A16_page3_block3.png"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                134,
+                135,
+                1426,
+                205
+              ],
+              "image": "processed\\8A16_page4_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "title",
+              "bbox": [
+                133,
+                319,
+                1427,
+                1516
+              ],
+              "image": "processed\\8A16_page4_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                1814,
+                1427,
+                403
+              ],
+              "image": "processed\\8A16_page4_block2.png"
+            }
+          ]
+        },
+        {
+          "page": 5,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                127,
+                1426,
+                482
+              ],
+              "image": "processed\\8A16_page5_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                626,
+                1427,
+                635
+              ],
+              "image": "processed\\8A16_page5_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                133,
+                1278,
+                1426,
+                251
+              ],
+              "image": "processed\\8A16_page5_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "paragraph",
+              "bbox": [
+                134,
+                1584,
+                1426,
+                633
+              ],
+              "image": "processed\\8A16_page5_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "paragraph",
+              "bbox": [
+                1484,
+                2169,
+                60,
+                48
+              ],
+              "image": "processed\\8A16_page5_block4.png"
+            }
+          ]
+        }
+      ],
+      "saved_files": [
+        "processed\\8A16_page1_block0.png",
+        "processed\\8A16_page1_block1.png",
+        "processed\\8A16_page1_block2.png",
+        "processed\\8A16_page1_block3.png",
+        "processed\\8A16_page1_block4.png",
+        "processed\\8A16_page1_block5.png",
+        "processed\\8A16_page1_block6.png",
+        "processed\\8A16_page1_block7.png",
+        "processed\\8A16_page1_block8.png",
+        "processed\\8A16_page1_block9.png",
+        "processed\\8A16_page1_block10.png",
+        "processed\\8A16_page1_block11.png",
+        "processed\\8A16_page1_block12.png",
+        "processed\\8A16_page1_block13.png",
+        "processed\\8A16_page1_block14.png",
+        "processed\\8A16_page1_block15.png",
+        "processed\\8A16_page1_block16.png",
+        "processed\\8A16_page1_block17.png",
+        "processed\\8A16_page1_block18.png",
+        "processed\\8A16_page1_block19.png",
+        "processed\\8A16_page1_block20.png",
+        "processed\\8A16_page1_block21.png",
+        "processed\\8A16_page1_block22.png",
+        "processed\\8A16_page1_block23.png",
+        "processed\\8A16_page2_block0.png",
+        "processed\\8A16_page2_block1.png",
+        "processed\\8A16_page3_block0.png",
+        "processed\\8A16_page3_block1.png",
+        "processed\\8A16_page3_block2.png",
+        "processed\\8A16_page3_block3.png",
+        "processed\\8A16_page4_block0.png",
+        "processed\\8A16_page4_block1.png",
+        "processed\\8A16_page4_block2.png",
+        "processed\\8A16_page5_block0.png",
+        "processed\\8A16_page5_block1.png",
+        "processed\\8A16_page5_block2.png",
+        "processed\\8A16_page5_block3.png",
+        "processed\\8A16_page5_block4.png"
+      ]
+    }
+  }
 }

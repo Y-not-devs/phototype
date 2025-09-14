@@ -3,6 +3,7 @@
  */
 import { CONFIG, ENDPOINTS, MESSAGES } from './config.js';
 import { Utils } from './utils.js';
+import { LoadingPanel } from './loading-panel.js';
 
 export class FileUpload {
     constructor(formId, options = {}) {
@@ -127,6 +128,10 @@ export class FileUpload {
 
         this.setUploadState(true);
         
+        // Create and show loading panel
+        const loadingPanel = new LoadingPanel();
+        loadingPanel.show();
+        
         try {
             const formData = new FormData();
             formData.append('file', file);
@@ -139,16 +144,49 @@ export class FileUpload {
             const result = await response.json();
             
             if (response.ok && result.success) {
-                Utils.showNotification(MESSAGES.upload.success, 'success');
-                setTimeout(() => {
-                    window.location.href = ENDPOINTS.viewJson(result.filename);
-                }, 1500);
+                // Start progress polling if task_id is provided
+                if (result.task_id) {
+                    loadingPanel.startProgressPolling(result);
+                    
+                    // Wait for completion before redirecting
+                    const waitForCompletion = () => {
+                        setTimeout(() => {
+                            const tracker = loadingPanel;
+                            if (tracker && tracker.isVisible) {
+                                // Still processing, check again
+                                waitForCompletion();
+                            } else {
+                                // Processing complete, redirect
+                                const redirectUrl = result.redirect_url || ENDPOINTS.viewJson(result.json_filename || result.filename);
+                                window.location.href = redirectUrl;
+                            }
+                        }, 500);
+                    };
+                    waitForCompletion();
+                } else {
+                    // No progress tracking, use simulation
+                    loadingPanel.simulateProgress();
+                    setTimeout(() => {
+                        const redirectUrl = result.redirect_url || ENDPOINTS.viewJson(result.json_filename || result.filename);
+                        window.location.href = redirectUrl;
+                    }, 3000);
+                }
+                
+                const message = result.message + (result.processing_method === 'backend' 
+                    ? ' (Enhanced OCR processing)' 
+                    : result.processing_method === 'async'
+                    ? ' (Processing in background)'
+                    : ' (Local processing)');
+                    
+                Utils.showNotification(message, 'success');
             } else {
+                loadingPanel.hide();
                 Utils.showNotification(result.error || MESSAGES.upload.error, 'error');
                 this.setUploadState(false);
             }
         } catch (error) {
             console.error('Upload error:', error);
+            loadingPanel.hide();
             Utils.showNotification(MESSAGES.upload.error, 'error');
             this.setUploadState(false);
         }

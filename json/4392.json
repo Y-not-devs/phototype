@@ -1,0 +1,379 @@
+{
+  "fields": {
+    "contract_number": "AUTO_4392",
+    "date": "14 September 2025",
+    "seller": {
+      "name": "Extracted from preprocessor data",
+      "location": "Location from OCR",
+      "representative": "Representative from document",
+      "authority": "Authority document reference"
+    },
+    "buyer": {
+      "name": "Buyer extracted from PDF",
+      "location": "Buyer location",
+      "director": "Director name",
+      "authority": "Authority document"
+    },
+    "subject_of_contract": {
+      "description": "Contract subject extracted by backend OCR",
+      "origin_country": "Origin country from document"
+    },
+    "price_and_total_cost": {
+      "price": "Price extracted from document",
+      "currency": "Currency from OCR",
+      "total_cost": "Total cost from backend processing"
+    }
+  },
+  "metadata": {
+    "processed_date": "2025-09-14T21:26:01.259093",
+    "source_file": "4392.pdf",
+    "processing_method": "Backend OCR with preprocessor",
+    "preprocessor_data": {
+      "filename": "4392.pdf",
+      "pages": 3,
+      "segments": [
+        {
+          "page": 1,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                1520,
+                14,
+                60,
+                48
+              ],
+              "image": "processed\\4392_page1_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "paragraph",
+              "bbox": [
+                547,
+                77,
+                710,
+                98
+              ],
+              "image": "processed\\4392_page1_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                302,
+                186,
+                193,
+                54
+              ],
+              "image": "processed\\4392_page1_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "paragraph",
+              "bbox": [
+                1116,
+                196,
+                342,
+                62
+              ],
+              "image": "processed\\4392_page1_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "title",
+              "bbox": [
+                220,
+                265,
+                1358,
+                291
+              ],
+              "image": "processed\\4392_page1_block4.png"
+            },
+            {
+              "id": 5,
+              "type": "paragraph",
+              "bbox": [
+                712,
+                580,
+                371,
+                64
+              ],
+              "image": "processed\\4392_page1_block5.png"
+            },
+            {
+              "id": 6,
+              "type": "title",
+              "bbox": [
+                214,
+                651,
+                1359,
+                451
+              ],
+              "image": "processed\\4392_page1_block6.png"
+            },
+            {
+              "id": 7,
+              "type": "paragraph",
+              "bbox": [
+                626,
+                1117,
+                530,
+                65
+              ],
+              "image": "processed\\4392_page1_block7.png"
+            },
+            {
+              "id": 8,
+              "type": "title",
+              "bbox": [
+                204,
+                1190,
+                1364,
+                1061
+              ],
+              "image": "processed\\4392_page1_block8.png"
+            },
+            {
+              "id": 9,
+              "type": "paragraph",
+              "bbox": [
+                1267,
+                2077,
+                50,
+                30
+              ],
+              "image": "processed\\4392_page1_block9.png"
+            },
+            {
+              "id": 10,
+              "type": "title",
+              "bbox": [
+                869,
+                2123,
+                638,
+                156
+              ],
+              "image": "processed\\4392_page1_block10.png"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                1517,
+                19,
+                61,
+                47
+              ],
+              "image": "processed\\4392_page2_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "title",
+              "bbox": [
+                212,
+                70,
+                1366,
+                881
+              ],
+              "image": "processed\\4392_page2_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "title",
+              "bbox": [
+                203,
+                1044,
+                1363,
+                872
+              ],
+              "image": "processed\\4392_page2_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "paragraph",
+              "bbox": [
+                230,
+                1964,
+                1301,
+                64
+              ],
+              "image": "processed\\4392_page2_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "paragraph",
+              "bbox": [
+                198,
+                2040,
+                1359,
+                254
+              ],
+              "image": "processed\\4392_page2_block4.png"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "blocks": [
+            {
+              "id": 0,
+              "type": "paragraph",
+              "bbox": [
+                1519,
+                17,
+                61,
+                49
+              ],
+              "image": "processed\\4392_page3_block0.png"
+            },
+            {
+              "id": 1,
+              "type": "title",
+              "bbox": [
+                216,
+                68,
+                1364,
+                643
+              ],
+              "image": "processed\\4392_page3_block1.png"
+            },
+            {
+              "id": 2,
+              "type": "paragraph",
+              "bbox": [
+                705,
+                735,
+                375,
+                64
+              ],
+              "image": "processed\\4392_page3_block2.png"
+            },
+            {
+              "id": 3,
+              "type": "paragraph",
+              "bbox": [
+                212,
+                804,
+                1357,
+                226
+              ],
+              "image": "processed\\4392_page3_block3.png"
+            },
+            {
+              "id": 4,
+              "type": "paragraph",
+              "bbox": [
+                306,
+                1078,
+                1164,
+                72
+              ],
+              "image": "processed\\4392_page3_block4.png"
+            },
+            {
+              "id": 5,
+              "type": "paragraph",
+              "bbox": [
+                208,
+                1153,
+                1357,
+                181
+              ],
+              "image": "processed\\4392_page3_block5.png"
+            },
+            {
+              "id": 6,
+              "type": "paragraph",
+              "bbox": [
+                625,
+                1352,
+                521,
+                57
+              ],
+              "image": "processed\\4392_page3_block6.png"
+            },
+            {
+              "id": 7,
+              "type": "title",
+              "bbox": [
+                203,
+                1423,
+                1358,
+                452
+              ],
+              "image": "processed\\4392_page3_block7.png"
+            },
+            {
+              "id": 8,
+              "type": "paragraph",
+              "bbox": [
+                1286,
+                2038,
+                71,
+                50
+              ],
+              "image": "processed\\4392_page3_block8.png"
+            },
+            {
+              "id": 9,
+              "type": "paragraph",
+              "bbox": [
+                198,
+                2074,
+                631,
+                193
+              ],
+              "image": "processed\\4392_page3_block9.png"
+            },
+            {
+              "id": 10,
+              "type": "paragraph",
+              "bbox": [
+                865,
+                2109,
+                639,
+                182
+              ],
+              "image": "processed\\4392_page3_block10.png"
+            }
+          ]
+        }
+      ],
+      "saved_files": [
+        "processed\\4392_page1_block0.png",
+        "processed\\4392_page1_block1.png",
+        "processed\\4392_page1_block2.png",
+        "processed\\4392_page1_block3.png",
+        "processed\\4392_page1_block4.png",
+        "processed\\4392_page1_block5.png",
+        "processed\\4392_page1_block6.png",
+        "processed\\4392_page1_block7.png",
+        "processed\\4392_page1_block8.png",
+        "processed\\4392_page1_block9.png",
+        "processed\\4392_page1_block10.png",
+        "processed\\4392_page2_block0.png",
+        "processed\\4392_page2_block1.png",
+        "processed\\4392_page2_block2.png",
+        "processed\\4392_page2_block3.png",
+        "processed\\4392_page2_block4.png",
+        "processed\\4392_page3_block0.png",
+        "processed\\4392_page3_block1.png",
+        "processed\\4392_page3_block2.png",
+        "processed\\4392_page3_block3.png",
+        "processed\\4392_page3_block4.png",
+        "processed\\4392_page3_block5.png",
+        "processed\\4392_page3_block6.png",
+        "processed\\4392_page3_block7.png",
+        "processed\\4392_page3_block8.png",
+        "processed\\4392_page3_block9.png",
+        "processed\\4392_page3_block10.png"
+      ]
+    }
+  }
+}

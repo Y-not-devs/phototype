@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - JSON List Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-800 text-white p-8">
+    <h1 class="text-2xl mb-4">JSON List Debug Test</h1>
+    <button onclick="loadJsonFiles()" class="bg-blue-500 px-4 py-2 rounded mb-4">Load JSON Files</button>
+    <div id="result" class="bg-gray-700 p-4 rounded"></div>
+    <div id="jsonFilesList" class="mt-4 bg-gray-600 p-4 rounded">Files will load here...</div>
+
+    <script>
+        async function loadJsonFiles() {
+            const resultDiv = document.getElementById('result');
+            const filesListDiv = document.getElementById('jsonFilesList');
+            
+            resultDiv.innerHTML = 'Loading...';
+            
+            try {
+                console.log('Fetching JSON files...');
+                const response = await fetch('/api/list-json');
+                
+                resultDiv.innerHTML += `<br>Response status: ${response.status}`;
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                resultDiv.innerHTML += `<br>Response data: ${JSON.stringify(data, null, 2)}`;
+                
+                if (data.success && data.files) {
+                    filesListDiv.innerHTML = '<h3>Files found:</h3>';
+                    data.files.forEach(file => {
+                        filesListDiv.innerHTML += `<div class="p-2 m-1 bg-gray-500 rounded">${file}</div>`;
+                    });
+                } else {
+                    filesListDiv.innerHTML = 'No files found or API error';
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML += `<br>ERROR: ${error.message}`;
+                filesListDiv.innerHTML = `Error loading files: ${error.message}`;
+            }
+        }
+        
+        // Auto-load on page load
+        document.addEventListener('DOMContentLoaded', loadJsonFiles);
+    </script>
+</body>
+</html>
