@@ -2,3 +2,5 @@ __pycache__/\n*.pyc\n.env
 .phototype_venv/
 .vscode/
 .idea/
+.venv/
+__pycache__/
