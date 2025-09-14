@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ filename }} - Phototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/json-comparison.css') }}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        accent: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen font-sans text-gray-100" data-filename="{{ filename }}">
+    <div class="container mx-auto max-w-full px-4 py-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center">
+                <a href="{{ url_for('main.index') }}" 
+                   class="bg-gray-700 hover:bg-gray-600 text-gray-100 p-3 rounded-lg mr-4 transition-colors duration-200 shadow-lg border border-gray-600">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </a>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-100 mb-1">{{ filename }}</h1>
+                    <p class="text-gray-400 flex items-center">
+                        <span class="material-symbols-outlined mr-2 text-accent">data_object</span>
+                        Contract Data Comparison - Phototype
+                    </p>
+                </div>
+            </div>
+            <div class="flex space-x-3">
+                <button id="toggleViewBtn" 
+                        class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded-lg transition-colors duration-200 flex items-center shadow-lg">
+                    <span class="material-symbols-outlined mr-2">view_quilt</span>
+                    <span id="viewModeText">Split View</span>
+                </button>
+                <a href="{{ url_for('main.api_get_json', filename=filename) }}" 
+                   class="bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-lg transition-colors duration-200 flex items-center shadow-lg">
+                    <span class="material-symbols-outlined mr-2">download</span>
+                    Download JSON
+                </a>
+            </div>
+        </div>
+
+        <!-- Validation Summary -->
+        <div id="validationSummary" class="bg-gray-800 rounded-lg p-4 mb-6 border border-gray-600">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-100 flex items-center">
+                    <span class="material-symbols-outlined mr-2 text-primary">fact_check</span>
+                    Validation Progress
+                </h3>
+                <div class="flex space-x-4 text-sm">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-accent rounded-full mr-2"></div>
+                        <span class="text-gray-300">Approved: <span id="approvedCount">0</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                        <span class="text-gray-300">Disapproved: <span id="disapprovedCount">0</span></span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-gray-500 rounded-full mr-2"></div>
+                        <span class="text-gray-300">Pending: <span id="pendingCount">0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Comparison Layout -->
+        <div id="comparisonLayout" class="comparison-layout">
+            <!-- JSON Visualization Panel -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl border border-gray-600 overflow-hidden">
+                <div class="bg-gray-700 px-6 py-4 border-b border-gray-600">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-100 flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-primary">description</span>
+                            Contract Information (JSON)
+                        </h2>
+                        <div class="text-sm text-gray-400">
+                            {% if data is mapping %}{{ data|length }} main fields{% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 json-container overflow-y-auto" style="max-height: 500px;">
+                    <div class="bg-gray-900 rounded-lg p-6">
+                        {% if data %}
+                            {% for key, value in data.items() %}
+                                <div class="json-field" data-field="{{ key }}">
+                                    <span class="json-key">"{{ key }}"</span><span class="json-colon">:</span>
+                                    {% if value is mapping %}
+                                        <span class="json-brace">{</span>
+                                        <div class="json-nested">
+                                            {% for sub_key, sub_value in value.items() %}
+                                                <div class="json-field" data-field="{{ key }}.{{ sub_key }}">
+                                                    <span class="json-key">"{{ sub_key }}"</span><span class="json-colon">:</span>
+                                                    {% if sub_value is string %}
+                                                        <span class="json-string">"{{ sub_value|e }}"</span>
+                                                    {% elif sub_value is number %}
+                                                        <span class="json-number">{{ sub_value }}</span>
+                                                    {% elif sub_value is sameas true or sub_value is sameas false %}
+                                                        <span class="json-boolean">{{ sub_value|lower }}</span>
+                                                    {% elif sub_value is none %}
+                                                        <span class="json-null">null</span>
+                                                    {% elif sub_value is mapping %}
+                                                        <span class="json-brace">{</span>
+                                                        <div class="json-nested">
+                                                            {% for deep_key, deep_value in sub_value.items() %}
+                                                                <div class="json-field" data-field="{{ key }}.{{ sub_key }}.{{ deep_key }}">
+                                                                    <span class="json-key">"{{ deep_key }}"</span><span class="json-colon">:</span>
+                                                                    {% if deep_value is string %}
+                                                                        <span class="json-string">"{{ deep_value|e }}"</span>
+                                                                    {% elif deep_value is number %}
+                                                                        <span class="json-number">{{ deep_value }}</span>
+                                                                    {% elif deep_value is sameas true or deep_value is sameas false %}
+                                                                        <span class="json-boolean">{{ deep_value|lower }}</span>
+                                                                    {% elif deep_value is none %}
+                                                                        <span class="json-null">null</span>
+                                                                    {% else %}
+                                                                        <span class="json-string">"{{ deep_value|e }}"</span>
+                                                                    {% endif %}
+                                                                    {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                        <span class="json-brace">}</span>
+                                                    {% else %}
+                                                        <span class="json-string">"{{ sub_value|e }}"</span>
+                                                    {% endif %}
+                                                    {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <span class="json-brace">}</span>
+                                    {% elif value is iterable and value is not string %}
+                                        <span class="json-brace">[</span>
+                                        <div class="json-nested">
+                                            {% for item in value %}
+                                                <div class="json-field" data-field="{{ key }}[{{ loop.index0 }}]">
+                                                    {% if item is string %}
+                                                        <span class="json-string">"{{ item|e }}"</span>
+                                                    {% elif item is number %}
+                                                        <span class="json-number">{{ item }}</span>
+                                                    {% elif item is sameas true or item is sameas false %}
+                                                        <span class="json-boolean">{{ item|lower }}</span>
+                                                    {% elif item is none %}
+                                                        <span class="json-null">null</span>
+                                                    {% else %}
+                                                        <span class="json-string">"{{ item|e }}"</span>
+                                                    {% endif %}
+                                                    {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <span class="json-brace">]</span>
+                                    {% elif value is string %}
+                                        <span class="json-string">"{{ value|e }}"</span>
+                                    {% elif value is number %}
+                                        <span class="json-number">{{ value }}</span>
+                                    {% elif value is sameas true or value is sameas false %}
+                                        <span class="json-boolean">{{ value|lower }}</span>
+                                    {% elif value is none %}
+                                        <span class="json-null">null</span>
+                                    {% else %}
+                                        <span class="json-string">"{{ value|e }}"</span>
+                                    {% endif %}
+                                    {% if not loop.last %}<span class="json-comma">,</span>{% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-8 text-gray-400">
+                                <span class="material-symbols-outlined text-4xl mb-4 block">error</span>
+                                No data available
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approval Controls Section -->
+            <div class="approval-section">
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-200 flex items-center mb-3">
+                        <span class="material-symbols-outlined mr-2 text-accent text-sm">fact_check</span>
+                        Field Validation
+                    </h3>
+                    <div class="text-xs text-gray-400 mb-4">
+                        Select validation status: <span class="material-symbols-outlined" style="font-size: 12px;">schedule</span> Pending, <span class="material-symbols-outlined" style="font-size: 12px;">check_circle</span> Approved, <span class="material-symbols-outlined" style="font-size: 12px;">cancel</span> Rejected
+                    </div>
+                </div>
+                
+                <div id="approvalList">
+                    {% if data is mapping %}
+                        {% for key, value in data.items() %}
+                            <!-- Top level field -->
+                            <div class="approval-item" data-field="{{ key }}">
+                                <span class="approval-field-name" title="{{ key }}">{{ key }}</span>
+                                <div class="approval-radio-group">
+                                    <label class="approval-radio-item pending" title="Pending">
+                                        <input type="radio" name="field-{{ key }}" value="pending" class="approval-radio" data-field="{{ key }}" checked>
+                                        <span class="material-symbols-outlined approval-radio-icon">schedule</span>
+                                    </label>
+                                    <label class="approval-radio-item approved" title="Approved">
+                                        <input type="radio" name="field-{{ key }}" value="approved" class="approval-radio" data-field="{{ key }}">
+                                        <span class="material-symbols-outlined approval-radio-icon">check_circle</span>
+                                    </label>
+                                    <label class="approval-radio-item disapproved" title="Rejected">
+                                        <input type="radio" name="field-{{ key }}" value="disapproved" class="approval-radio" data-field="{{ key }}">
+                                        <span class="material-symbols-outlined approval-radio-icon">cancel</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            {% if value is mapping %}
+                                {% for sub_key, sub_value in value.items() %}
+                                    <!-- Second level field -->
+                                    <div class="approval-item" data-field="{{ key }}.{{ sub_key }}">
+                                        <span class="approval-field-name" title="{{ key }}.{{ sub_key }}">└ {{ sub_key }}</span>
+                                        <div class="approval-radio-group">
+                                            <label class="approval-radio-item pending" title="Pending">
+                                                <input type="radio" name="field-{{ key }}.{{ sub_key }}" value="pending" class="approval-radio" data-field="{{ key }}.{{ sub_key }}" checked>
+                                                <span class="material-symbols-outlined approval-radio-icon">schedule</span>
+                                            </label>
+                                            <label class="approval-radio-item approved" title="Approved">
+                                                <input type="radio" name="field-{{ key }}.{{ sub_key }}" value="approved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}">
+                                                <span class="material-symbols-outlined approval-radio-icon">check_circle</span>
+                                            </label>
+                                            <label class="approval-radio-item disapproved" title="Rejected">
+                                                <input type="radio" name="field-{{ key }}.{{ sub_key }}" value="disapproved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}">
+                                                <span class="material-symbols-outlined approval-radio-icon">cancel</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if sub_value is mapping %}
+                                        {% for deep_key, deep_value in sub_value.items() %}
+                                            <!-- Third level field -->
+                                            <div class="approval-item" data-field="{{ key }}.{{ sub_key }}.{{ deep_key }}">
+                                                <span class="approval-field-name" title="{{ key }}.{{ sub_key }}.{{ deep_key }}">  └ {{ deep_key }}</span>
+                                                <div class="approval-radio-group">
+                                                    <label class="approval-radio-item pending" title="Pending">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}.{{ deep_key }}" value="pending" class="approval-radio" data-field="{{ key }}.{{ sub_key }}.{{ deep_key }}" checked>
+                                                        <span class="material-symbols-outlined approval-radio-icon">schedule</span>
+                                                    </label>
+                                                    <label class="approval-radio-item approved" title="Approved">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}.{{ deep_key }}" value="approved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}.{{ deep_key }}">
+                                                        <span class="material-symbols-outlined approval-radio-icon">check_circle</span>
+                                                    </label>
+                                                    <label class="approval-radio-item disapproved" title="Rejected">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}.{{ deep_key }}" value="disapproved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}.{{ deep_key }}">
+                                                        <span class="material-symbols-outlined approval-radio-icon">cancel</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% elif sub_value is iterable and sub_value is not string %}
+                                        {% for item in sub_value %}
+                                            <!-- Array item field -->
+                                            <div class="approval-item" data-field="{{ key }}.{{ sub_key }}[{{ loop.index0 }}]">
+                                                <span class="approval-field-name" title="{{ key }}.{{ sub_key }}[{{ loop.index0 }}]">  └ [{{ loop.index0 }}]</span>
+                                                <div class="approval-radio-group">
+                                                    <label class="approval-radio-item pending" title="Pending">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}[{{ loop.index0 }}]" value="pending" class="approval-radio" data-field="{{ key }}.{{ sub_key }}[{{ loop.index0 }}]" checked>
+                                                        <span class="material-symbols-outlined approval-radio-icon">schedule</span>
+                                                    </label>
+                                                    <label class="approval-radio-item approved" title="Approved">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}[{{ loop.index0 }}]" value="approved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}[{{ loop.index0 }}]">
+                                                        <span class="material-symbols-outlined approval-radio-icon">check_circle</span>
+                                                    </label>
+                                                    <label class="approval-radio-item disapproved" title="Rejected">
+                                                        <input type="radio" name="field-{{ key }}.{{ sub_key }}[{{ loop.index0 }}]" value="disapproved" class="approval-radio" data-field="{{ key }}.{{ sub_key }}[{{ loop.index0 }}]">
+                                                        <span class="material-symbols-outlined approval-radio-icon">cancel</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% elif value is iterable and value is not string %}
+                                {% for item in value %}
+                                    <!-- Array item field -->
+                                    <div class="approval-item" data-field="{{ key }}[{{ loop.index0 }}]">
+                                        <span class="approval-field-name" title="{{ key }}[{{ loop.index0 }}]">└ [{{ loop.index0 }}]</span>
+                                        <div class="approval-radio-group">
+                                            <label class="approval-radio-item pending" title="Pending">
+                                                <input type="radio" name="field-{{ key }}[{{ loop.index0 }}]" value="pending" class="approval-radio" data-field="{{ key }}[{{ loop.index0 }}]" checked>
+                                                <span class="material-symbols-outlined approval-radio-icon">schedule</span>
+                                            </label>
+                                            <label class="approval-radio-item approved" title="Approved">
+                                                <input type="radio" name="field-{{ key }}[{{ loop.index0 }}]" value="approved" class="approval-radio" data-field="{{ key }}[{{ loop.index0 }}]">
+                                                <span class="material-symbols-outlined approval-radio-icon">check_circle</span>
+                                            </label>
+                                            <label class="approval-radio-item disapproved" title="Rejected">
+                                                <input type="radio" name="field-{{ key }}[{{ loop.index0 }}]" value="disapproved" class="approval-radio" data-field="{{ key }}[{{ loop.index0 }}]">
+                                                <span class="material-symbols-outlined approval-radio-icon">cancel</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- PDF Excerpts Panel -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl border border-gray-600 overflow-hidden">
+                <div class="bg-gray-700 px-6 py-4 border-b border-gray-600">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-100 flex items-center">
+                            <span class="material-symbols-outlined mr-2 text-green-400">text_snippet</span>
+                            PDF Text Excerpts
+                        </h2>
+                        <div class="text-sm text-gray-400">
+                            Extracted text matching JSON fields
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-full overflow-y-auto" style="max-height: 500px;">
+                    <div class="excerpt-viewer" id="excerptViewer">
+                        <div class="flex items-center justify-center h-full text-gray-400 min-h-48">
+                            <div class="text-center">
+                                <span class="material-symbols-outlined text-6xl mb-4 block">text_snippet</span>
+                                <p class="text-lg">PDF excerpts will be displayed here</p>
+                                <p class="text-sm mt-2">Loading excerpts...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="{{ url_for('static', filename='js/json-comparison.js') }}"></script>
+</body>
+</html>

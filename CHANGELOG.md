@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `.phototype_venv/` and other venv dirs added to `.gitignore`
 
 ### Changed
-- Migrated prototype into microservices layout
+- Migrated prototype into microservices layout and refactored old code base
 
 ### Removed
 - Extra placeholder folders for minimal structure

@@ -1,0 +1,69 @@
+/* Basic JSON Viewer Styles */
+
+/* Font setup */
+.json-container {
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* JSON syntax highlighting */
+.json-key {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.json-string {
+    color: #fbbf24;
+}
+
+.json-number {
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+.json-boolean {
+    color: #ec4899;
+    font-weight: 500;
+}
+
+.json-null {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.json-brace {
+    color: #d1d5db;
+    font-weight: 700;
+}
+
+.json-colon {
+    color: #9ca3af;
+    margin: 0 4px;
+}
+
+.json-comma {
+    color: #9ca3af;
+}
+
+/* JSON field styling for basic view */
+.json-field {
+    margin: 4px 0;
+    padding: 4px 8px;
+    border-left: 2px solid #374151;
+    background: linear-gradient(90deg, rgba(55, 65, 81, 0.2) 0%, transparent 100%);
+    border-radius: 0 4px 4px 0;
+    transition: all 0.2s ease;
+}
+
+.json-field:hover {
+    background: linear-gradient(90deg, rgba(55, 65, 81, 0.4) 0%, transparent 100%);
+    border-left-color: #10b981;
+}
+
+/* JSON nesting */
+.json-nested {
+    margin-left: 20px;
+    border-left: 1px solid #374151;
+    padding-left: 12px;
+}

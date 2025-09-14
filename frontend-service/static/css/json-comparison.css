@@ -1,0 +1,328 @@
+/* JSON Comparison Viewer Styles */
+
+/* Font setup */
+.json-container {
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* JSON syntax highlighting */
+.json-key {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.json-string {
+    color: #fbbf24;
+}
+
+.json-number {
+    color: #3b82f6;
+    font-weight: 500;
+}
+
+.json-boolean {
+    color: #ec4899;
+    font-weight: 500;
+}
+
+.json-null {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.json-brace {
+    color: #d1d5db;
+    font-weight: 700;
+}
+
+.json-colon {
+    color: #9ca3af;
+    margin: 0 4px;
+}
+
+.json-comma {
+    color: #9ca3af;
+}
+
+/* JSON field styling */
+.json-field {
+    margin: 8px 0;
+    padding: 6px 12px;
+    border-left: 3px solid #374151;
+    background: linear-gradient(90deg, rgba(55, 65, 81, 0.3) 0%, transparent 100%);
+    border-radius: 0 6px 6px 0;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 32px;
+}
+
+.json-field:hover {
+    background: linear-gradient(90deg, rgba(55, 65, 81, 0.5) 0%, transparent 100%);
+    border-left-color: #10b981;
+}
+
+.json-field.approved {
+    border-left-color: #10b981;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, transparent 100%);
+}
+
+.json-field.disapproved {
+    border-left-color: #ef4444;
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.2) 0%, transparent 100%);
+}
+
+/* Field highlighting for synchronized hover */
+.json-field.highlighted {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.3) 0%, transparent 100%);
+    border-left-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    transform: translateX(4px);
+    animation: highlightPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes highlightPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* JSON nesting */
+.json-nested {
+    margin-left: 24px;
+    border-left: 2px solid #374151;
+    padding-left: 16px;
+}
+
+.json-nested .json-field {
+    margin-left: 0; /* Reset margin for nested fields to maintain button alignment */
+}
+
+/* PDF viewer styling */
+.pdf-viewer {
+    height: 600px;
+    border: 2px solid #374151;
+    border-radius: 8px;
+    overflow: auto;
+    background: #f9fafb;
+}
+
+/* Radio button groups for approval */
+.approval-radio-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.approval-radio-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-size: 16px;
+    min-width: 32px;
+    min-height: 32px;
+    position: relative;
+}
+
+.approval-radio-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.05);
+}
+
+/* Custom radio button styling - hidden but functional */
+.approval-radio {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+/* Material icon styling */
+.approval-radio-icon {
+    font-family: 'Material Symbols Outlined';
+    font-size: 18px;
+    line-height: 1;
+    transition: all 0.2s ease;
+}
+
+/* Radio button states */
+.approval-radio-item.pending {
+    color: #9ca3af;
+    background: rgba(156, 163, 175, 0.1);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+.approval-radio-item.pending:hover {
+    color: #d1d5db;
+    background: rgba(156, 163, 175, 0.15);
+}
+
+.approval-radio-item.pending .approval-radio:checked ~ .approval-radio-icon {
+    color: #f3f4f6;
+    background: rgba(156, 163, 175, 0.25);
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.4);
+}
+
+.approval-radio-item.approved {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.approval-radio-item.approved:hover {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+}
+
+.approval-radio-item.approved .approval-radio:checked ~ .approval-radio-icon {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.25);
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+    transform: scale(1.1);
+}
+
+.approval-radio-item.disapproved {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.approval-radio-item.disapproved:hover {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.approval-radio-item.disapproved .approval-radio:checked ~ .approval-radio-icon {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.25);
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+    transform: scale(1.1);
+}
+
+/* Layout styling */
+.comparison-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    height: calc(100vh - 150px);
+    max-height: 550px;
+}
+
+.approval-section {
+    min-width: 200px;
+    max-width: 250px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 16px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.approval-section h3 {
+    position: sticky;
+    top: 0;
+    background: #1f2937;
+    z-index: 10;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #374151;
+}
+
+.approval-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: #374151;
+    border-radius: 6px;
+    border-left: 3px solid #6b7280;
+    transition: all 0.2s ease;
+    min-height: 50px;
+}
+
+.approval-item:hover {
+    background: #4b5563;
+    border-left-color: #10b981;
+}
+
+.approval-item.approved {
+    border-left-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.approval-item.disapproved {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Approval item highlighting for synchronized hover */
+.approval-item.highlighted {
+    background: rgba(59, 130, 246, 0.2);
+    border-left-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    transform: translateX(4px);
+    animation: highlightPulse 1.5s ease-in-out infinite;
+}
+
+.approval-field-name {
+    flex: 1;
+    max-width: 200px;
+    font-size: 12px;
+    color: #d1d5db;
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.approval-field-name[title*="└"] {
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.approval-field-name[title*="  └"] {
+    color: #6b7280;
+    font-size: 10px;
+}
+
+.approval-buttons-inline {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .comparison-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .approval-section {
+        order: 2;
+        max-width: none;
+    }
+}
