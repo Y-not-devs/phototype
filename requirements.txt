@@ -4,6 +4,7 @@ fastapi        # backend services (router, OCR, preprocessing, etc.)
 uvicorn        # run FastAPI apps
 requests       # HTTP calls between services
 pydantic       # request/response validation in services
+aiohttp        # async HTTP client for router service
 
 # OCR and NLP libraries
 opencv-python  # image preprocessing
@@ -19,8 +20,8 @@ pandas         # tabular data / excel if needed
 openpyxl       # .xlsx handling
 python-docx    # .docx if still needed
 pypdf2         # PDF parsing
+pdf2image      # PDF to image conversion for preprocessing
 
 # Utilities
 python-multipart   # file uploads in FastAPI
-aiohttp            # async requests (optional, can stick to requests)
 pytest             # testing

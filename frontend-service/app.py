@@ -330,30 +330,37 @@ def create_app():
                     # Initialize with fallback data
                     json_data = process_pdf_to_json(upload_path, filename)
                     
-                    # Try to use the existing backend preprocessor service
+                    # Try to use the new router service for complete document analysis
                     backend_success = False
                     try:
-                        tracker.update(40, "Running OCR analysis", "Extracting text from PDF pages...")
+                        tracker.update(40, "Analyzing document", "Running language detection and OCR analysis...")
                         
-                        PREPROCESSOR_URL = "http://127.0.0.1:8001/preprocess/"
+                        ROUTER_URL = "http://127.0.0.1:8000/analyze-document"
                         with open(upload_path, "rb") as f:
                             files = {"file": (filename, f, "application/pdf")}
-                            resp = requests.post(PREPROCESSOR_URL, files=files, timeout=60)
+                            resp = requests.post(ROUTER_URL, files=files, timeout=120)
                         
                         if resp.status_code == 200:
-                            tracker.update(70, "Processing extracted text", "Organizing extracted information...")
+                            tracker.update(70, "Processing analysis results", "Organizing extracted information...")
                             
-                            # Backend preprocessing succeeded
-                            preprocessor_data = resp.json()
+                            # Backend analysis succeeded
+                            analysis_data = resp.json()
                             
-                            # For now, create a simple JSON structure
-                            # In a real setup, this would come from the complete backend pipeline
+                            # Extract language information
+                            lang_info = analysis_data.get("language_detection", {})
+                            detected_language = "unknown"
+                            if lang_info and lang_info.get("success"):
+                                lang_data = lang_info.get("data", {})
+                                detected_language = lang_data.get("top_language", "unknown")
+                            
+                            # Create enhanced JSON structure with language information
                             json_data = {
                                 "fields": {
                                     "contract_number": f"AUTO_{base_name.upper()}",
                                     "date": datetime.now().strftime("%d %B %Y"),
+                                    "detected_language": detected_language,
                                     "seller": {
-                                        "name": "Extracted from preprocessor data",
+                                        "name": "Extracted from document analysis",
                                         "location": "Location from OCR",
                                         "representative": "Representative from document",
                                         "authority": "Authority document reference"
@@ -377,17 +384,17 @@ def create_app():
                                 "metadata": {
                                     "processed_date": datetime.now().isoformat(),
                                     "source_file": filename,
-                                    "processing_method": "Backend OCR with preprocessor",
-                                    "preprocessor_data": preprocessor_data
+                                    "processing_method": "Router service with language detection",
+                                    "analysis_data": analysis_data
                                 }
                             }
                             backend_success = True
-                            print(f"Backend preprocessing successful for {filename}")
+                            print(f"Backend document analysis successful for {filename}")
                         else:
-                            print(f"Backend preprocessor error: {resp.status_code} - {resp.text}")
+                            print(f"Backend router error: {resp.status_code} - {resp.text}")
                             tracker.update(50, "Using fallback processing", "Backend unavailable, using local processing...")
                     except Exception as e:
-                        print(f"Backend preprocessor unavailable: {e}")
+                        print(f"Backend router unavailable: {e}")
                         tracker.update(50, "Using fallback processing", "Backend unavailable, using local processing...")
                     
                     # Fallback to simple processing if backend is unavailable

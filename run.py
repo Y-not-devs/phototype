@@ -18,9 +18,21 @@ services = [
     },
     {
         "name": "router",
-        "cmd": [sys.executable, "app/main.py"],
-        "cwd": "router/router-service",
-        "enabled": False,
+        "cmd": [
+            sys.executable, "-m", "uvicorn", "main:app",
+            "--host=0.0.0.0", "--port=8000", "--reload"
+        ],
+        "cwd": "router/router-service/app",
+        "enabled": True,
+    },
+    {
+        "name": "lang-detect",
+        "cmd": [
+            sys.executable, "-m", "uvicorn", "main:app",
+            "--host=0.0.0.0", "--port=8002", "--reload"
+        ],
+        "cwd": "router/lang-detect-service/app",
+        "enabled": True,
     },
     {
         "name": "preprocessor",

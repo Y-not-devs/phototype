@@ -1,0 +1,73 @@
+{
+  "fields": {
+    "contract_number": "AUTO_CONTENT",
+    "date": "19 September 2025",
+    "detected_language": "en",
+    "seller": {
+      "name": "Extracted from document analysis",
+      "location": "Location from OCR",
+      "representative": "Representative from document",
+      "authority": "Authority document reference"
+    },
+    "buyer": {
+      "name": "Buyer extracted from PDF",
+      "location": "Buyer location",
+      "director": "Director name",
+      "authority": "Authority document"
+    },
+    "subject_of_contract": {
+      "description": "Contract subject extracted by backend OCR",
+      "origin_country": "Origin country from document"
+    },
+    "price_and_total_cost": {
+      "price": "Price extracted from document",
+      "currency": "Currency from OCR",
+      "total_cost": "Total cost from backend processing"
+    }
+  },
+  "metadata": {
+    "processed_date": "2025-09-19T00:41:09.912609",
+    "source_file": "content.pdf",
+    "processing_method": "Router service with language detection",
+    "analysis_data": {
+      "filename": "content.pdf",
+      "language_detection": {
+        "success": true,
+        "data": {
+          "document_languages": [
+            {
+              "lang": "en",
+              "prob": 1.0
+            }
+          ],
+          "top_language": "en",
+          "per_chunk": [
+            {
+              "chunk_index": 0,
+              "start_char": 0,
+              "end_char": 48654,
+              "text_preview": "263 The Historical Evolution of Bankruptcy Law  in England, the US and Italy up to 1939:  Determinants of Institutional …",
+              "languages": [
+                {
+                  "lang": "en",
+                  "prob": 1.0
+                }
+              ]
+            }
+          ],
+          "meta": {
+            "file_name": "content.pdf",
+            "paragraphs_detected": 1,
+            "chunk_min_chars": 40,
+            "doc_char_limit": 300000,
+            "note": "Image-only PDFs yield empty text; run OCR upstream and send text to /detect-text instead."
+          }
+        }
+      },
+      "preprocessing_result": null,
+      "ocr_result": null,
+      "success": true,
+      "message": "Language detected from PDF text layer"
+    }
+  }
+}
